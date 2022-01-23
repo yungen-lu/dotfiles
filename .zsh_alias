@@ -1,0 +1,3 @@
+alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+alias n='lvim'
+alias k='kubectl'

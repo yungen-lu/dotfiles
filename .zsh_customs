@@ -1,0 +1,4 @@
+[ -s "/Users/yungen/.jabba/jabba.sh" ] && source "/Users/yungen/.jabba/jabba.sh"
+zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
+eval "$(pyenv init -)"
+eval "$(starship init zsh)"

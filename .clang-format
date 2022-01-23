@@ -1,0 +1,4 @@
+BasedOnStyle: Google
+ColumnLimit: 120
+ReflowComments: true
+AllowShortFunctionsOnASingleLine: SFS_InlineOnly
