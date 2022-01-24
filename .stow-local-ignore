@@ -1,6 +1,7 @@
 \.git
 \.gitignore
 scripts
+Brewfile
 .DS_Store
 ^/README.*
 ^/LICENSE.*
