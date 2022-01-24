@@ -1,6 +1,6 @@
 \.git
 \.gitignore
-
+scripts
 .DS_Store
 ^/README.*
 ^/LICENSE.*
