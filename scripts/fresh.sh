@@ -9,6 +9,6 @@ brew bundle --file $PWD/../Brewfile
 
 ./clone.sh
 
-stow  . --target=$HOME
+stow  ../ --target=$HOME
 
 source $HOME/.zshrc
