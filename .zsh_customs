@@ -2,3 +2,11 @@
 zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
 eval "$(pyenv init -)"
 eval "$(starship init zsh)"
+# function keybindings() {
+#   zvm_bindkey viins '^[[A' history-beginning-search-backward
+#   zvm_bindkey viins '^[[B' history-beginning-search-forward
+#   zvm_bindkey vicmd '^[[A' history-beginning-search-backward
+#   zvm_bindkey vicmd '^[[B' history-beginning-search-forward
+# }
+# zvm_after_init_commands+=(keybindings)
+zvm_after_init_commands+=("bindkey '^[[A' up-line-or-search" "bindkey '^[[B' down-line-or-search")

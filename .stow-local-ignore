@@ -1,5 +1,6 @@
 \.git
 scripts
+.mackup.cfg
 Brewfile
 .DS_Store
 ^/README.*

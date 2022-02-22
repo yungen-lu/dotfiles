@@ -1,14 +1,35 @@
 lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.colorscheme = "onedarker"
-
 lvim.leader = "space"
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.builtin.dashboard.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 0
+lvim.builtin.nvimtree.show_icons.git = 1
+lvim.builtin.notify.active = true
+lvim.lsp.diagnostics.virtual_text = false
+lvim.keys.insert_mode["jk"] =  false
+lvim.keys.insert_mode["kj"] = false
+lvim.keys.insert_mode["jj"] = false
+lvim.keys.insert_mode["<A-Up>"] = false
+lvim.keys.insert_mode["<A-Down>"] = false
+lvim.keys.insert_mode["<A-Left>"] = false
+lvim.keys.insert_mode["<A-Right>"] = false
+lvim.keys.command_mode["<C-j>"] = false
+lvim.keys.command_mode["<C-k>"] = false
+lvim.lsp.override = vim.tbl_filter(function(name)
+  return name ~= "tailwindcss"
+end, lvim.lsp.override)
+vim.api.nvim_set_keymap('i', '<C-a>', '<C-o>I', {noremap = true})
+vim.api.nvim_set_keymap('i', '<C-e>', '<C-o>A', {noremap = true})
 
+-- vim.api.nvim_set_keymap('v','al',':<C-U>normal 0v$h<CR>',{noremap = true})
+-- vim.api.nvim_set_keymap('o','al',':normal val<CR>',{noremap = false})
+-- vim.api.nvim_set_keymap('v','il',':<C-U>normal ^vg_<CR>',{noremap = true})
+-- vim.api.nvim_set_keymap('o','il',':normal vil<CR>',{noremap = false})
+lvim.autocommands.custom_groups = {
+  { "CursorHold", "*", "lua vim.diagnostic.open_float(0,{scope='line'})" },
+}
 lvim.builtin.treesitter.ensure_installed = {
   "lua",
   "c",
@@ -16,65 +37,24 @@ lvim.builtin.treesitter.ensure_installed = {
   "python",
   "javascript",
   "typescript",
+  "tsx",
   "yaml",
   "java",
   "dockerfile",
   "verilog",
-  "bash"
+  "bash",
+  "html",
+  "go"
 }
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
-
+lvim.builtin.treesitter.autotag = {enable = true}
 lvim.lsp.automatic_servers_installation = false
-lvim.plugins = {
-  {
-    "windwp/nvim-ts-autotag",
-    event = "InsertEnter",
-    config = function()
-      require("nvim-ts-autotag").setup()
-    end,
-  },
-  {
-    "karb94/neoscroll.nvim",
-    event = "WinScrolled",
-    config = function ()
-    require('neoscroll').setup({
-      mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>', '<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
-      hide_cursor = true,          -- Hide cursor while scrolling
-      stop_eof = true,             -- Stop at <EOF> when scrolling downwards
-      use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
-      respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-      cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-      easing_function = nil,        -- Default easing function
-      pre_hook = nil,              -- Function to run before the scrolling animation starts
-      post_hook = nil,              -- Function to run after the scrolling animation ends
-      })
-    end
-  },
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    event = "BufRead",
-    setup = function()
-      vim.g.indentLine_enabled = 1
-      vim.g.indent_blankline_char = "▏"
-      vim.g.indent_blankline_filetype_exclude = {"help", "terminal", "dashboard"}
-      vim.g.indent_blankline_buftype_exclude = {"terminal"}
-      vim.g.indent_blankline_show_trailing_blankline_indent = false
-      vim.g.indent_blankline_show_first_indent_level = false
-    end
-  },
-  {
-    "skywind3000/asynctasks.vim",
-  },
-  {
-    "skywind3000/asyncrun.vim",
-  },
-  {
-  "simrat39/symbols-outline.nvim",
-  cmd = "SymbolsOutline",
-  },
-}
+require("user.plugins").config()
+-- lvim.builtin.which_key.mappings["F"] = {
+--   "<cmd>lua vim.lsp.buf.formatting_sync({}, 1000)<cr>", "Format"
+-- }
 lvim.builtin.which_key.mappings["o"] = {
   "<cmd> SymbolsOutline<cr>", "symbols-outline"
 }
@@ -85,18 +65,18 @@ lvim.builtin.which_key.mappings["k"] = {
   g = {"<cmd>AsyncTaskEdit!<cr>", "edit global tasks"},
   r = {"<cmd>AsyncTask file-run<cr>", "run file"},
 }
-lvim.builtin.which_key.mappings["t"] = {
-  name = "Diagnostics",
-  t = { "<cmd>TroubleToggle<cr>", "trouble" },
-  w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "workspace" },
-  d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "document" },
-  q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
-  l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
-  r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
-}
+-- lvim.builtin.which_key.mappings["t"] = {
+--   name = "Diagnostics",
+--   t = { "<cmd>TroubleToggle<cr>", "trouble" },
+--   w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "workspace" },
+--   d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "document" },
+--   q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
+--   l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
+--   r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
+-- }
 vim.opt.wrap = true
-vim.g.asynctasks_term_pos = "bottom"
-
+vim.g.asynctasks_term_pos = "toggleterm"
+vim.g.asynctasks_term_reuse = 1
 vim.g.asyncrun_open = 6
 -- vim.cmd([[ vnoremap al :<C-U>normal 0v$h<CR>
 --     omap al :normal val<CR>
@@ -106,10 +86,10 @@ vim.g.asyncrun_open = 6
 vim.g.symbols_outline = {
     highlight_hovered_item = true,
     show_guides = true,
-    auto_preview = true,
+    auto_preview = false,
     position = 'right',
     relative_width = true,
-    width = 40,
+    width = 35,
     auto_close = false,
     show_numbers = false,
     show_relative_numbers = false,
@@ -127,32 +107,51 @@ vim.g.symbols_outline = {
     lsp_blacklist = {},
     symbol_blacklist = {},
     symbols = {
-        File = {icon = "", hl = "TSURI"},
-        Module = {icon = "", hl = "TSNamespace"},
+        File = {icon = "", hl = "TSURI"},
+        Module = {icon = " ", hl = "TSNamespace"},
         Namespace = {icon = "", hl = "TSNamespace"},
         Package = {icon = "", hl = "TSNamespace"},
-        Class = {icon = "𝓒", hl = "TSType"},
-        Method = {icon = "ƒ", hl = "TSMethod"},
-        Property = {icon = "", hl = "TSMethod"},
-        Field = {icon = "", hl = "TSField"},
-        Constructor = {icon = "", hl = "TSConstructor"},
-        Enum = {icon = "ℰ", hl = "TSType"},
-        Interface = {icon = "ﰮ", hl = "TSType"},
-        Function = {icon = "", hl = "TSFunction"},
-        Variable = {icon = "", hl = "TSConstant"},
-        Constant = {icon = "", hl = "TSConstant"},
-        String = {icon = "𝓐", hl = "TSString"},
-        Number = {icon = "#", hl = "TSNumber"},
+        Class = {icon = " ", hl = "TSType"},
+        Method = {icon = " ", hl = "TSMethod"},
+        Property = {icon = " ", hl = "TSMethod"},
+        Field = {icon = " ", hl = "TSField"},
+        Constructor = {icon = " ", hl = "TSConstructor"},
+        Enum = {icon = "練", hl = "TSType"},
+        Interface = {icon = "ﰮ ", hl = "TSType"},
+        Function = {icon = " ", hl = "TSFunction"},
+        Variable = {icon = " ", hl = "TSConstant"},
+        Constant = {icon = "ﲀ ", hl = "TSConstant"},
+        String = {icon = " ", hl = "TSString"},
+        Number = {icon = " ", hl = "TSNumber"},
         Boolean = {icon = "⊨", hl = "TSBoolean"},
         Array = {icon = "", hl = "TSConstant"},
         Object = {icon = "⦿", hl = "TSType"},
-        Key = {icon = "🔐", hl = "TSType"},
+        Key = {icon = " ", hl = "TSType"},
         Null = {icon = "NULL", hl = "TSType"},
-        EnumMember = {icon = "", hl = "TSField"},
-        Struct = {icon = "𝓢", hl = "TSType"},
-        Event = {icon = "🗲", hl = "TSType"},
-        Operator = {icon = "+", hl = "TSOperator"},
-        TypeParameter = {icon = "𝙏", hl = "TSParameter"}
+        EnumMember = {icon = " ", hl = "TSField"},
+        Struct = {icon = " ", hl = "TSType"},
+        Event = {icon = " ", hl = "TSType"},
+        Operator = {icon = "", hl = "TSOperator"},
+        TypeParameter = {icon = " ", hl = "TSParameter"}
     }
 }
-lvim.builtin.treesitter.indent = { enable = true, disable = { "python" } }
+lvim.builtin.treesitter.indent = { enable = true, disable = { "yaml", "python" } }
+-- lvim.lsp.diagnostics.on_publish_diagnostics = {update_in_insert = true}
+lvim.builtin.dashboard.custom_header = {
+  '',
+  '',
+  ' ██╗   ██╗██╗   ██╗███╗   ██╗ ██████╗ ███████╗███╗   ██╗  ',
+  ' ╚██╗ ██╔╝██║   ██║████╗  ██║██╔════╝ ██╔════╝████╗  ██║  ',
+  '  ╚████╔╝ ██║   ██║██╔██╗ ██║██║  ███╗█████╗  ██╔██╗ ██║  ',
+  '   ╚██╔╝  ██║   ██║██║╚██╗██║██║   ██║██╔══╝  ██║╚██╗██║  ',
+  '    ██║   ╚██████╔╝██║ ╚████║╚██████╔╝███████╗██║ ╚████║  ',
+  '    ╚═╝    ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝  ',
+  '',
+  '',
+}
+local formatters = require "lvim.lsp.null-ls.formatters"
+formatters.setup {
+  {
+    exe = "prettier",
+  },
+}
